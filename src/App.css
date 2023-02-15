@@ -4,6 +4,7 @@
 }
 
 .ZoomableSlider-Slider {
+  position: relative;
   width: 400px
 }
 
@@ -18,8 +19,23 @@
   position: absolute;
   top: 50%;
   left: 0;
-  width: 1px;
-  height: 5px;
+  width: 6px;
+  height: 6px;
   background: red;
   transform: translate(-50%, -50%);
+}
+
+.ZoomableSlider-Pointer {
+  position: absolute;
+  left: 0;
+  transform: translateX(-50%);
+}
+
+.Triangle {
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+
+  border-bottom: 10px solid black;
 }

@@ -8,8 +8,9 @@ function App() {
       Zoomable Slider
       <div>
         <ZoomableSlider
-          unit={10}
-          maxValue={100}
+          step={10}
+          max={100}
+          value={85}
         // width={100}
         />
       </div>
@@ -19,20 +20,24 @@ function App() {
 
 type ZoomableSliderProps = {
   className?: string;
-  unit: number;
-  maxValue: number;
+  step: number;
+  max: number;
+  value: number; // make this as in two way binding
+  discrete?: boolean;
   /**
    * Need to pass this property when you want to handle resize effects
-   */
+  */
   width?: number;
   mapLabel?: (...props: any) => any
+  onChange?: (value: number) => void
 }
 
 const ZoomableSlider = forwardRef(function ZoomableSlider(props: PropsWithRef<ZoomableSliderProps>, ref: any) {
   const {
     className,
-    unit,
-    maxValue,
+    step,
+    max,
+    value,
     width,
     mapLabel,
   } = props
@@ -64,13 +69,13 @@ const ZoomableSlider = forwardRef(function ZoomableSlider(props: PropsWithRef<Zo
 
   const currentWidth = width ? width : lastFixedWidth
 
-  const reminderSteps = maxValue % unit
-  const unitsCount = (maxValue - reminderSteps) / unit
+  const reminderSteps = max % step
+  const unitsCount = (max - reminderSteps) / step
   const labelsCount = unitsCount + (reminderSteps ? 2 : 1)
   const labels = [...Array(labelsCount)].map((_, index) => {
-    let offset = index * unit
-    if(reminderSteps && index === labelsCount - 1) {
-      offset -= unit - reminderSteps
+    let offset = index * step
+    if (reminderSteps && index === labelsCount - 1) {
+      offset -= step - reminderSteps
     }
 
     return {
@@ -85,18 +90,24 @@ const ZoomableSlider = forwardRef(function ZoomableSlider(props: PropsWithRef<Zo
       ref={sliderRef}
     >
       <div className="ZoomableSlider-Ruler">
-        {labels.map((value, index) => (
-          <div className="ZoomableSlider-Unit"
+        {labels.map((label, index) => (
+          <div
+            key={label.offset}
+            className="ZoomableSlider-Unit"
             style={{
-              left: currentWidth ? value.offset * currentWidth / maxValue : 0,
+              left: currentWidth ? label.offset * currentWidth / max : 0,
             }}
-            key={value.offset}
           >
-            <div className="ZoomableSlider-Label">{mapLabel ? mapLabel(value, index) : null}</div>
+            <div className="ZoomableSlider-Label">{mapLabel ? mapLabel(label, index) : null}</div>
           </div>
         ))}
       </div>
-      <div className="ZoomableSlider-Pointer"></div>
+      <div
+        className="ZoomableSlider-Pointer Triangle"
+        style={{
+          left: currentWidth ? value * currentWidth / max : 0
+        }}
+      ></div>
     </div>
   )
 })
