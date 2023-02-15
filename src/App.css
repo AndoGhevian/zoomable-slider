@@ -2,3 +2,24 @@
   margin: 0;
   padding: 0;
 }
+
+.ZoomableSlider-Slider {
+  width: 400px
+}
+
+.ZoomableSlider-Ruler {
+  position: relative;
+  overflow: hidden;
+  height: 20px;
+  background-color: green;
+}
+
+.ZoomableSlider-Unit {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 1px;
+  height: 5px;
+  background: red;
+  transform: translate(-50%, -50%);
+}
