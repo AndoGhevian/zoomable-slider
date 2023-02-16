@@ -1,0 +1,43 @@
+.ZoomableSlider-Slider {
+  position: relative;
+  width: 700px
+}
+
+.ZoomableSlider-Ruler {
+  position: relative;
+  overflow: hidden;
+  height: 20px;
+  background-color: green;
+}
+
+.ZoomableSlider-Unit {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 6px;
+  height: 21px;
+  background: red;
+  transform: translate(-50%, -50%);
+}
+
+.ZoomableSlider-PointerContainer {
+  touch-action: none;
+  position: absolute;
+  left: 0;
+  transform: translateX(-50%);
+
+  /* See Triangle, ZoomableSlider-Pointer below for dimensions */
+  width: 20px;
+  height: 10px;
+}
+
+.ZoomableSlider-Pointer {}
+
+.Triangle {
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+
+  border-bottom: 20px solid black;
+}
