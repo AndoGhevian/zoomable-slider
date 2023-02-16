@@ -4,8 +4,9 @@
 }
 
 .ZoomableSlider-Slider {
+  margin: 100px;
   position: relative;
-  width: 400px
+  width: 700px
 }
 
 .ZoomableSlider-Ruler {
@@ -20,16 +21,22 @@
   top: 50%;
   left: 0;
   width: 6px;
-  height: 6px;
+  height: 21px;
   background: red;
   transform: translate(-50%, -50%);
 }
 
-.ZoomableSlider-Pointer {
+.ZoomableSlider-PointerContainer {
   position: absolute;
   left: 0;
   transform: translateX(-50%);
+
+  /* See Triangle, ZoomableSlider-Pointer below for dimensions */
+  width: 20px;
+  height: 10px;
 }
+
+.ZoomableSlider-Pointer {}
 
 .Triangle {
   width: 0;
@@ -37,5 +44,5 @@
   border-left: 10px solid transparent;
   border-right: 10px solid transparent;
 
-  border-bottom: 10px solid black;
+  border-bottom: 20px solid black;
 }
