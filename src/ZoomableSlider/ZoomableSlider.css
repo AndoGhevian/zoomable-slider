@@ -1,5 +1,4 @@
 .ZoomableSlider-Slider {
-  margin: 100px;
   position: relative;
   width: 700px
 }
@@ -22,6 +21,7 @@
 }
 
 .ZoomableSlider-PointerContainer {
+  touch-action: none;
   position: absolute;
   left: 0;
   transform: translateX(-50%);

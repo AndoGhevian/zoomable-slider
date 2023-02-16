@@ -2,3 +2,14 @@
   margin: 0;
   padding: 0;
 }
+
+/* Changin styles */
+.ZoomableSlider-Slider {
+  width: 100%;
+}
+
+.Example {
+  width: calc(100% - 120px);
+  margin: 100px auto 0 auto;
+  transform: translateY(-50%);
+}

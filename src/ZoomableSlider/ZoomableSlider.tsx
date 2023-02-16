@@ -43,8 +43,12 @@ export type ZoomableSliderProps = {
   mapLabel?: (offset: number, index: number) => React.ReactElement
   /**
    * Fire on each granular step change, also on finish change i.e. release of pointer.
-   * @param value - Nearest granularty value
-   * @param finish - change finish indicator
+   * 
+   * NOTE: Slider with Two way binding is some other sort of discret slider,
+   * because onChange fires only on granular changes
+   * but if discrete property is set to false it will change value smoothle
+   * @param value - Nearest granularty value: takes in to account also fixToStep and discrete values
+   * @param finish - change finish indicator: takes in to account also fixToStep and discrete values
    */
   onChange?: (value: number, finish: boolean) => void
 }
@@ -145,21 +149,23 @@ const ZoomableSlider = forwardRef(function ZoomableSlider(props: PropsWithRef<Zo
       const newValueOffsetX = newValue * currentWidth! / max
       const microStepOffsetX = microStepValue * currentWidth! / max
 
-      if (!discrete) {
-        if (down) {
-          pointerSpringApi.start({ left: pointerPureOffsetX })
+      if (value === undefined) {
+        if (!discrete) {
+          if (down) {
+            pointerSpringApi.start({ left: pointerPureOffsetX })
+          } else {
+            pointerSpringApi.start({ left: newValueOffsetX, })
+          }
         } else {
-          pointerSpringApi.start({ left: newValueOffsetX, })
-        }
-      } else {
-        if (down) {
-          pointerSpringApi.start({
-            left: microStepOffsetX,
-            immediate: true,
-            // onChange: () => onChange(microStepValue, down)
-          })
-        } else {
-          pointerSpringApi.start({ left: newValueOffsetX, immediate: true })
+          if (down) {
+            pointerSpringApi.start({
+              left: microStepOffsetX,
+              immediate: true,
+              // onChange: () => onChange(microStepValue, down)
+            })
+          } else {
+            pointerSpringApi.start({ left: newValueOffsetX, immediate: true })
+          }
         }
       }
 
@@ -196,11 +202,11 @@ const ZoomableSlider = forwardRef(function ZoomableSlider(props: PropsWithRef<Zo
 
   useEffect(() => {
     let newValue: number
-    if (value) {
+    if (value !== undefined) {
       newValue = value
     } else {
       newValue = rangeValue
-      if (value === undefined && prevValue !== undefined) {
+      if (prevValue !== undefined) {
         setRangeValue(prevValue)
       }
     }
